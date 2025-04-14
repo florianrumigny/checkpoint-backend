@@ -1,3 +1,4 @@
+import { Country } from "../entities/country";
 import { Continent } from "../entities/continent";
 import { ContinentInput } from "../inputs/ContinentInput";
 import { Arg, Mutation, Query, Resolver } from "type-graphql";
@@ -15,8 +16,8 @@ class ContinentResoler {
     }
   }
 
-  @Query(() => [Continent])
-  async getAllCountryByContinent(@Arg("id") id: number) {
+  @Query(() => [Country])
+  async getAllCountriesByContinent(@Arg("id") id: number) {
     try {
       const continent = await Continent.findOneOrFail({
         where: { id },
