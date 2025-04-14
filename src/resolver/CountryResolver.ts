@@ -1,10 +1,10 @@
 import { CountryInput } from "../inputs/CountryInput";
 import { Country } from "../entities/country";
 import { Arg, Mutation, Query, Resolver } from "type-graphql";
+import { Continent } from "../entities/continent";
 
 @Resolver(Country)
 class CountryResolver {
-  //TODO: create a query to get all countries
   @Query(() => [Country])
   async getAllCountries() {
     try {
@@ -31,11 +31,16 @@ class CountryResolver {
     }
   }
 
-  // TODO: create a mutation to create a country
   @Mutation(() => Country)
   async createNewCountry(@Arg("data") newCountryData: CountryInput) {
     try {
-      const countryToSave = Country.create({ ...newCountryData });
+      const continentId = parseInt(newCountryData.continentId);
+
+      const continent = await Continent.findOneByOrFail({
+        id: continentId,
+      });
+
+      const countryToSave = Country.create({ ...newCountryData, continent });
 
       const result = await countryToSave.save();
 
@@ -43,6 +48,24 @@ class CountryResolver {
     } catch (error) {
       console.error("This is the error", error);
       throw new Error("Error creating country");
+    }
+  }
+
+  @Mutation(() => String)
+  async deleteCountry(@Arg("id") id: number) {
+    try {
+      const country = await Country.findOneByOrFail({ id });
+
+      if (!country) {
+        throw new Error("Country not found");
+      }
+
+      await Country.delete({ id });
+
+      return "Country deleted successfully";
+    } catch (error) {
+      console.error("This is the error", error);
+      throw new Error("Error deleting country");
     }
   }
 }

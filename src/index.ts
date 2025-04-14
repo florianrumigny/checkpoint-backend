@@ -4,6 +4,7 @@ import { startStandaloneServer } from "@apollo/server/standalone";
 import { buildSchema } from "type-graphql";
 import { dataSourceCheckpoint } from "./config/db";
 import CountryResolver from "./resolver/CountryResolver";
+import ContinentResoler from "./resolver/ContinentResolver";
 
 async function start() {
   await dataSourceCheckpoint.initialize();
@@ -11,7 +12,7 @@ async function start() {
   //  TODO: build schema with typegraphql (resolvers)
 
   const schema = await buildSchema({
-    resolvers: [CountryResolver],
+    resolvers: [CountryResolver, ContinentResoler],
   });
 
   // TODO: Create apollo server with schema

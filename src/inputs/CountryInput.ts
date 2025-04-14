@@ -1,5 +1,5 @@
 import { Country } from "../entities/country";
-import { Field, InputType } from "type-graphql";
+import { Field, ID, InputType } from "type-graphql";
 
 @InputType()
 export class CountryInput implements Partial<Country> {
@@ -11,4 +11,7 @@ export class CountryInput implements Partial<Country> {
 
   @Field()
   emoji: string;
+
+  @Field(() => ID)
+  continentId: string;
 }
