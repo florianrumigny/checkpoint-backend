@@ -1,4 +1,4 @@
-import { Country } from "src/entities/country";
+import { Country } from "../entities/country";
 import { DataSource } from "typeorm";
 
 export const dataSourceCheckpoint = new DataSource({

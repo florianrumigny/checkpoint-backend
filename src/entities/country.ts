@@ -9,14 +9,14 @@ export class Country extends BaseEntity {
   id: number;
 
   @Field()
-  @Column()
+  @Column({ unique: true })
   name: string;
 
   @Field()
-  @Column()
+  @Column({ unique: true })
   code: string;
 
   @Field()
-  @Column()
+  @Column({ unique: true })
   emoji: string;
 }
